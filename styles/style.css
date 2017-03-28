@@ -12,9 +12,13 @@ padding: 0;
 	border: 3px;
 }
 
-
+.contener{
+	width: 400px;
+	padding: 0;
+	float: right;
+}
 #bestscore{
-	top: 0;
+	top: 100px;
 	position: absolute;
 	color: aqua;
 	font-size: 100px;
@@ -24,7 +28,9 @@ padding: 0;
 	position: relative;
 }
 
-
+.reset{
+	display: none;
+}
 #score{
 font-family: sans-serif;
     font-weight: 900;
