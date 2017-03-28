@@ -7,29 +7,23 @@ padding: 0;
 .canvas{
   width: 1000px;
   height: 900px;
-cursor: url('../images/Marteau_TFH.png'), pointer; 
+/* cursor: url('../images/Marteau_TFH.png'), pointer; */
 	position: relative;
 	border: 3px;
 }
 
 
-
-/*span{
-	width:1000px;
-	height: 100px;
-	background: grey;
-	position:relative;
-} */
+#bestscore{
+	top: 0;
+	position: absolute;
+	color: aqua;
+	font-size: 100px;
+}
 
 #compt{
 	position: relative;
 }
-img{
-	display: inherit;
-	position: relative;
-	top: 0;
-	left: 0;
-}
+
 
 #score{
 font-family: sans-serif;
