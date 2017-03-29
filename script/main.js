@@ -1,16 +1,24 @@
-var temps = 60;
+var temps = 10;
 var compte = temps;
-<<<<<<< HEAD
-var compteurDePoint = 0;
-=======
 var compteurDePoint=0;
->>>>>>> 85ca5587c36ba373523e8105ca588c45651483c5
+//Selection des elements du DOM
+var $contener = document.querySelector(".contener");
+var $bestscore = document.querySelector("#bestscore");
+var $compt = document.querySelector("#compt");
+var $score = document.querySelector("#score");
+var $button = document.querySelector('.resetBouton');
+
+
+for( var i = 0; i <= 8; i++){
+	$contener.innerHTML += "<div class='case case" + i + "'></div>";
+}
+
 if(localStorage.getItem('score')){
-	$('#bestscore').text('Score : ' + localStorage.getItem('score'));
+	$bestscore.textContent = 'Score : ' + localStorage.getItem('score');
 }
 else{
 	localStorage.setItem('score', 0);
-	$('#bestscore').text('Score : 0');
+	$bestscore.textContent = 'Score : 0';
 }
 
 function decompte(){
@@ -20,21 +28,17 @@ function decompte(){
 	} else {
 		pluriel = "s";
 	}
-	
-	// sert à modifier l'affichage du mot "secondes"
-	$("#compt")[0].innerHTML = compte + " seconde" + pluriel;
 
+	// sert à modifier l'affichage du mot "secondes"
+	$compt.innerHTML = compte + " seconde" + pluriel;
 	// si le compteur est = 0 alors on affiche alerte "c'est fini"
-	if(compte == 0 || compte < 0) {
-		compte = 0;
+	if(!compte || compte < 0) {
 		//ClearInterval interrompt la boucle à la fin du compteur
-		clearInterval(timer);
-		clearInterval(t);
-		reset()
+		reset();
 
 		if(compteurDePoint > localStorage.getItem('score')){
 			localStorage.setItem('score', compteurDePoint);
-			$('#bestscore').append('Score : ' + compteurDePoint)
+			$bestscore.textContent = 'Score : ' + compteurDePoint;
 		}
 
 
@@ -43,7 +47,7 @@ function decompte(){
 	compte--;
 }
 let timer = setInterval(decompte,1000);
-let t = setInterval(positionAleatoire,1000);
+let taupe = setInterval(positionAleatoire,1000);
 
 // MARTEAU SOURIS
 
@@ -65,53 +69,49 @@ $('div').mousedown(function() {
 
 // POSITION ALEATOIRE TAUPE
 function positionAleatoire() {
-
+	var $cases = document.querySelectorAll('.case');
 	// on peut cliquer que là où y a le topiqueur et on peut pas cliquer deux fois sur la même case
-	$('.case').off('click');
-	let maxWidth = $('.contener').width();
-	let maxHeight = $('.contener').height();
-	var x = 0;
-	x = Math.floor(Math.random() * 9);
-
-	var cases = document.querySelectorAll('.case');
-	for(var i = 0; i < cases.length ; i++){
-		$('.case' + [i]).text('');
+	for (var i =0; i< $cases.length; i++){
+		$cases[i].removeEventListener('click', losePoints);
+		$cases[i].removeEventListener('click', earnPoints);
+		$cases[i].innerHTML = '';
 	}
+
+	var x = Math.floor(Math.random() * 9);
 	var min = 1;
-	var max = 4;
+	var max = 7;
 	var nbrRandom = min + Math.floor(Math.random() * max);
-<<<<<<< HEAD
-	if(nbrRandom === 2) {
-=======
-	if(nbrRandom==2) {
->>>>>>> 85ca5587c36ba373523e8105ca588c45651483c5
-		$('.case'+ [x]).html('<div id="darktaupe"><img src="images/darkTaupiqueur.png" alt="darktopiqueur"/></div>');
-		$('.case' + [x]).click(perteDePoints);
 
-	}    else {
-
-		$('.case' + [x]).html('<div id="taupe"><img src="images/Taupiqueur.png" alt="t opiqueur"/></div>');
-		$('.case'+[x]).click(gainDePoints);
+	if (nbrRandom === 2) {
+		$cases[x].innerHTML = '<div id="darktaupe"><img src="images/darkTaupiqueur.png" alt="darktopiqueur"/></div>';
+		$cases[x].addEventListener('click', losePoints);
+	} else if(nbrRandom ===6) {
+		$cases[x].innerHTML = '<div id="darktaupe"><img src="images/Marteau_TFH.png" alt="marteau"/></div>';
+		$cases[x].addEventListener('click', gameOver);
 	}
-
+	else
+	{
+		$cases[x].innerHTML = '<div id="taupe"><img src="images/Taupiqueur.png" alt="t opiqueur"/></div>';
+		$cases[x].addEventListener('click', earnPoints);
+	}
 }
 
-function perteDePoints(event){
+function losePoints(event){
 	/*	JouerSon(); */
 	compteurDePoint -=10;
 	if(compteurDePoint <0){
 		compteurDePoint =0
 	}
-	$('#score').text(compteurDePoint);
-	$(event.currentTarget).off('click');
+	$score.textContent = compteurDePoint;
+	event.currentTarget.removeEventListener('click', losePoints);
 }
 
-function gainDePoints(event){
+function earnPoints(event){
 	/*    JouerSon(); */
 
 	compteurDePoint ++;
-	$('#score').text(compteurDePoint);
-	$(event.currentTarget).off('click');
+	$score.textContent = compteurDePoint;
+	event.currentTarget.removeEventListener('click', earnPoints);
 }
 
 /*function JouerSon() {
@@ -120,18 +120,25 @@ function gainDePoints(event){
 } */
 
 //BOUTON RETOUR
-
 function reset(){
 	// crée une variable pour eviter de reannalyser tout le dom
-	var button = $('.resetBouton');
-	button.removeClass( "reset" );
-	button.click(function() {
-		compteurDePoint = 0;
-		compte = temps;
-		$('#score').text(compteurDePoint)
-		timer = setInterval(decompte,1000);
-		t = setInterval(positionAleatoire,1000);
-		button.off('click');
-		button.addClass('reset');
-	});
+	$button.classList.remove("reset");
+	$button.addEventListener('click', resetGame);
+	clearInterval(timer);
+	clearInterval(taupe);
+}
+
+function resetGame(){
+	compteurDePoint = 0;
+	compte = temps;
+	$score.textContent = compteurDePoint;
+	timer = setInterval(decompte,1000);
+	taupe = setInterval(positionAleatoire,1000);
+	$button.removeEventListener('click', resetGame);
+	$button.classList.add('reset');
+}
+function gameOver(event){
+	event.currentTarget.removeEventListener('click', gameOver);
+	alert("GAME OVER");
+	reset();
 }
