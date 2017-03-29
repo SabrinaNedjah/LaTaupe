@@ -1,8 +1,6 @@
 var temps = 60;
 var compte = temps;
 var compteurDePoint=0;
-
-
 if(localStorage.getItem('score')){
 	$('#bestscore').text('Score : ' + localStorage.getItem('score'));
 }
@@ -39,7 +37,6 @@ function decompte(){
 	//on diminue de 1 seconde
 	compte--;
 }
-
 let timer = setInterval(decompte,1000);
 let t = setInterval(positionAleatoire,1000);
 
@@ -75,60 +72,38 @@ function positionAleatoire() {
 	for(var i = 0; i < cases.length ; i++){
 		$('.case' + [i]).text('');
 	}
-
-	$('.case' + [x]).html('<div id="taupe"><img src="images/Taupiqueur.png" alt="topiqueur"/></div>');
-
-	$('.case' + [x]).click(function(){
-
-		/*	JouerSon(); */
-		compteurDePoint++;
-		$('#score').text(compteurDePoint);
-
-		//annule le probleme des cases clickable quand le topiqueur est passé dessus
-		$('.case' + [x]).off('click');
-
-
-	});
 	var min = 1;
 	var max = 4;
-	var nbrRandom = 1 + Math.floor(Math.random() * 4);
-	console.log(nbrRandom);
+	var nbrRandom = min + Math.floor(Math.random() * max);
 	if(nbrRandom==2) {
 		$('.case'+ [x]).html('<div id="darktaupe"><img src="images/darkTaupiqueur.png" alt="darktopiqueur"/></div>');
 		$('.case' + [x]).click(perteDePoints);
 
-	}	else 
+	}    else {
 
-		$('.case' + [x]).html('<div id="taupe"><img src="images/Taupiqueur.png" alt="topiqueur"/></div>');
-
-	$('.case'+[x]).click(gainDePoints);
-
+		$('.case' + [x]).html('<div id="taupe"><img src="images/Taupiqueur.png" alt="t opiqueur"/></div>');
+		$('.case'+[x]).click(gainDePoints);
+	}
 
 }
 
-
-
-function perteDePoints(){
+function perteDePoints(event){
 	/*	JouerSon(); */
-
 	compteurDePoint -=10;
-
+	if(compteurDePoint <0){
+		compteurDePoint =0
+	}
 	$('#score').text(compteurDePoint);
-	$('.case' + [x]).off('click');
+	$(event.currentTarget).off('click');
 }
 
-function gainDePoints(){
-	/*	JouerSon(); */
+function gainDePoints(event){
+	/*    JouerSon(); */
 
-	compteurDePoint++;
+	compteurDePoint ++;
 	$('#score').text(compteurDePoint);
-	$('.case'+ [x]).off('click');
+	$(event.currentTarget).off('click');
 }
-
-
-
-
-
 
 /*function JouerSon() {
 	var sound = document.getElementById("beep");
@@ -150,5 +125,4 @@ function reset(){
 		button.off('click');
 		button.addClass('reset');
 	});
-
-};
+}
