@@ -1,6 +1,6 @@
 var temps = 60;
 var compte = temps;
-var compteurDePoint=0;
+var compteurDePoint = 0;
 if(localStorage.getItem('score')){
 	$('#bestscore').text('Score : ' + localStorage.getItem('score'));
 }
@@ -16,6 +16,7 @@ function decompte(){
 	} else {
 		pluriel = "s";
 	}
+	
 	// sert à modifier l'affichage du mot "secondes"
 	$("#compt")[0].innerHTML = compte + " seconde" + pluriel;
 
@@ -29,7 +30,7 @@ function decompte(){
 
 		if(compteurDePoint > localStorage.getItem('score')){
 			localStorage.setItem('score', compteurDePoint);
-			$('#bestscore').text('Score : ' + compteurDePoint)
+			$('#bestscore').append('Score : ' + compteurDePoint)
 		}
 
 
@@ -75,7 +76,7 @@ function positionAleatoire() {
 	var min = 1;
 	var max = 4;
 	var nbrRandom = min + Math.floor(Math.random() * max);
-	if(nbrRandom==2) {
+	if(nbrRandom === 2) {
 		$('.case'+ [x]).html('<div id="darktaupe"><img src="images/darkTaupiqueur.png" alt="darktopiqueur"/></div>');
 		$('.case' + [x]).click(perteDePoints);
 
