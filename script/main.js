@@ -1,6 +1,10 @@
 var temps = 60;
 var compte = temps;
+<<<<<<< HEAD
 var compteurDePoint = 0;
+=======
+var compteurDePoint=0;
+>>>>>>> 85ca5587c36ba373523e8105ca588c45651483c5
 if(localStorage.getItem('score')){
 	$('#bestscore').text('Score : ' + localStorage.getItem('score'));
 }
@@ -76,7 +80,11 @@ function positionAleatoire() {
 	var min = 1;
 	var max = 4;
 	var nbrRandom = min + Math.floor(Math.random() * max);
+<<<<<<< HEAD
 	if(nbrRandom === 2) {
+=======
+	if(nbrRandom==2) {
+>>>>>>> 85ca5587c36ba373523e8105ca588c45651483c5
 		$('.case'+ [x]).html('<div id="darktaupe"><img src="images/darkTaupiqueur.png" alt="darktopiqueur"/></div>');
 		$('.case' + [x]).click(perteDePoints);
 
