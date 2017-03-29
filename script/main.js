@@ -1,6 +1,7 @@
-var temps = 10;
+var temps = 60;
 var compte = temps;
 var compteurDePoint=0;
+
 
 if(localStorage.getItem('score')){
 	$('#bestscore').text('Score : ' + localStorage.getItem('score'));
@@ -62,6 +63,7 @@ $('div').mousedown(function() {
 
 // POSITION ALEATOIRE TAUPE
 function positionAleatoire() {
+
 	// on peut cliquer que là où y a le topiqueur et on peut pas cliquer deux fois sur la même case
 	$('.case').off('click');
 	let maxWidth = $('.contener').width();
@@ -75,38 +77,78 @@ function positionAleatoire() {
 	}
 
 	$('.case' + [x]).html('<div id="taupe"><img src="images/Taupiqueur.png" alt="topiqueur"/></div>');
-	console.log(x);
+
 	$('.case' + [x]).click(function(){
 
-		JouerSon();
+		/*	JouerSon(); */
 		compteurDePoint++;
 		$('#score').text(compteurDePoint);
-		
+
 		//annule le probleme des cases clickable quand le topiqueur est passé dessus
 		$('.case' + [x]).off('click');
+
+
 	});
+	var min = 1;
+	var max = 4;
+	var nbrRandom = 1 + Math.floor(Math.random() * 4);
+	console.log(nbrRandom);
+	if(nbrRandom==2) {
+		$('.case'+ [x]).html('<div id="darktaupe"><img src="images/darkTaupiqueur.png" alt="darktopiqueur"/></div>');
+		$('.case' + [x]).click(perteDePoints);
+
+	}	else 
+
+		$('.case' + [x]).html('<div id="taupe"><img src="images/Taupiqueur.png" alt="topiqueur"/></div>');
+
+	$('.case'+[x]).click(gainDePoints);
+
 
 }
 
-function JouerSon() {
+
+
+function perteDePoints(){
+	/*	JouerSon(); */
+
+	compteurDePoint -=10;
+
+	$('#score').text(compteurDePoint);
+	$('.case' + [x]).off('click');
+}
+
+function gainDePoints(){
+	/*	JouerSon(); */
+
+	compteurDePoint++;
+	$('#score').text(compteurDePoint);
+	$('.case'+ [x]).off('click');
+}
+
+
+
+
+
+
+/*function JouerSon() {
 	var sound = document.getElementById("beep");
 	sound.play();
-}
+} */
 
 //BOUTON RETOUR
-	
-	function reset(){
-		// crée une variable pour eviter de reannalyser tout le dom
-		var button = $('.resetBouton');
-		button.removeClass( "reset" );
-		button.click(function() {
-			compteurDePoint = 0;
-			compte = temps;
-			$('#score').text(compteurDePoint)
-			timer = setInterval(decompte,1000);
-			t = setInterval(positionAleatoire,1000);
-			button.off('click');
-			button.addClass('reset');
-		});
-		
-	};
+
+function reset(){
+	// crée une variable pour eviter de reannalyser tout le dom
+	var button = $('.resetBouton');
+	button.removeClass( "reset" );
+	button.click(function() {
+		compteurDePoint = 0;
+		compte = temps;
+		$('#score').text(compteurDePoint)
+		timer = setInterval(decompte,1000);
+		t = setInterval(positionAleatoire,1000);
+		button.off('click');
+		button.addClass('reset');
+	});
+
+};
