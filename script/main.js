@@ -1,7 +1,7 @@
 var temps = 10;
 var compte = temps;
-var compteurDePoint=0;
-//Selection des elements du DOM
+var pointCounter=0;
+//ONLY SELECTOR FOR DOM
 var $contener = document.querySelector(".contener");
 var $bestscore = document.querySelector("#bestscore");
 var $compt = document.querySelector("#compt");
@@ -22,44 +22,35 @@ else{
 }
 
 function decompte(){
-	//sert uniquement à retirer le S à seconde quand on affiche
 	if(compte <= 1) {
 		pluriel = "";
 	} else {
 		pluriel = "s";
 	}
-
-	// sert à modifier l'affichage du mot "secondes"
 	$compt.innerHTML = compte + " seconde" + pluriel;
-	// si le compteur est = 0 alors on affiche alerte "c'est fini"
 	if(!compte || compte < 0) {
-		//ClearInterval interrompt la boucle à la fin du compteur
 		reset();
 
-		if(compteurDePoint > localStorage.getItem('score')){
-			localStorage.setItem('score', compteurDePoint);
-			$bestscore.textContent = 'Score : ' + compteurDePoint;
+		if(pointCounter > localStorage.getItem('score')){
+			localStorage.setItem('score', pointCounter);
+			$bestscore.textContent = 'Score : ' + pointCounter;
 		}
-
-
 	}
-	//on diminue de 1 seconde
+	//decrease 1 point
 	compte--;
 }
 let timer = setInterval(decompte,1000);
-let taupe = setInterval(positionAleatoire,1000);
+let taupe = setInterval(randomPosition,1000);
 
-// MARTEAU SOURIS
-
-
+/*
+* MARTEAU SOURIS
+*/
 
 /* $('div').mouseup(function() {
 	$('.canvas').css({
 		cursor: "url('../images/Marteau_TFH.png'), pointer",
 	});
 });
-
-
 $('div').mousedown(function() {
 	$('.canvas').css({
 		cursor: "url('../images/Marteau.Click.png'), pointer",
@@ -67,10 +58,12 @@ $('div').mousedown(function() {
 });
 */
 
-// POSITION ALEATOIRE TAUPE
-function positionAleatoire() {
+
+
+//RANDOM POSITION
+function randomPosition() {
 	var $cases = document.querySelectorAll('.case');
-	// on peut cliquer que là où y a le topiqueur et on peut pas cliquer deux fois sur la même case
+	// cannot click 2 times 
 	for (var i =0; i< $cases.length; i++){
 		$cases[i].removeEventListener('click', losePoints);
 		$cases[i].removeEventListener('click', earnPoints);
@@ -98,19 +91,19 @@ function positionAleatoire() {
 
 function losePoints(event){
 	/*	JouerSon(); */
-	compteurDePoint -=10;
-	if(compteurDePoint <0){
-		compteurDePoint =0
+	pointCounter -=10;
+	if(pointCounter <0){
+		pointCounter =0
 	}
-	$score.textContent = compteurDePoint;
+	$score.textContent = pointCounter;
 	event.currentTarget.removeEventListener('click', losePoints);
 }
 
 function earnPoints(event){
 	/*    JouerSon(); */
 
-	compteurDePoint ++;
-	$score.textContent = compteurDePoint;
+	pointCounter ++;
+	$score.textContent = pointCounter;
 	event.currentTarget.removeEventListener('click', earnPoints);
 }
 
@@ -119,9 +112,8 @@ function earnPoints(event){
 	sound.play();
 } */
 
-//BOUTON RETOUR
+// RESET BUTTON
 function reset(){
-	// crée une variable pour eviter de reannalyser tout le dom
 	$button.classList.remove("reset");
 	$button.addEventListener('click', resetGame);
 	clearInterval(timer);
@@ -129,11 +121,11 @@ function reset(){
 }
 
 function resetGame(){
-	compteurDePoint = 0;
+	pointCounter = 0;
 	compte = temps;
-	$score.textContent = compteurDePoint;
+	$score.textContent = pointCounter;
 	timer = setInterval(decompte,1000);
-	taupe = setInterval(positionAleatoire,1000);
+	taupe = setInterval(randomPosition,1000);
 	$button.removeEventListener('click', resetGame);
 	$button.classList.add('reset');
 }
