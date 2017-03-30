@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Venez vincre les taupes, mais ne vous faites pas avoir par la taupe thug et ses bombes !">
+    <meta name="author" content="Loris MARINO">
+    <link rel="icon" type="image/png" href="images/taupe.png" />
+    <title>La taupe</title>
+    <link href="https://fonts.googleapis.com/css?family=Pacifico%7CRoboto:100" rel="stylesheet" />
+    <link rel="stylesheet" href="css/styles.css" /> </head>
+
+  <body>
+   
+    <header>
+      <div class="logo">
+        <a href="index.html" title="Retourner sur la page d'accueil"> <img src="images/logo.png" alt="" /> </a>
+      </div>
+    </header>
+
+    <div class="contentGame">
+      <div class="row center-xs">
+        <div class="xs-auto">
+          <div class="game">
+            <div class="board boardTop"></div>
+            <div class="board boardRight"></div>
+            <div class="board boardBottom"></div>
+            <div class="board boardLeft"></div>
+            <div class="row cases">
+
+            </div>
+          </div>
+        </div>
+        <div class="xs-12 l-4">
+          <div class="score">
+            <div class="row center-xs middle-xs">
+              <div class="xs-9">
+                <div class="row">
+                  <div class="xs-6">
+                    <div class="remainingTime"></div>
+                  </div>
+                  <div class="xs-6">
+                    <a class="resetButton reset">Jouer</a>
+                  </div>
+                  <div class="xs-12">
+                    <p><strong>Votre score : </strong><span class="currentScore"></span></p>
+                  </div>
+                  <div class="xs-12">
+                    <p><strong>Meilleur score : </strong><span class="bestScore"></span></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <audio src="audio/fond.mp3" autoplay loop></audio>
+    <audio class="moleSound" src="audio/moleSound.wav"></audio>
+    <audio class="bombSound" src="audio/bomb.wav"></audio>
+    
+    <footer class="footerGame"> 
+      <div class="houseOfMole"></div>
+    </footer>
+    
+    <div class="social">
+      <a target="_blank" href="https://www.facebook.com/La-Taupe-195921064242199/">
+        <img src="images/facebook.png" alt="Icone facebook" />
+      </a>
+      <a target="_blank" href="https://twitter.com/Lataupetest">
+        <img src="images/twitter.png" alt="Icone twitter" />
+      </a>
+      <button class="mute">
+        <img src="images/speaker.png" alt="Haut parleur" />
+      </button>
+    </div>
+    <div class="greenBackground">
+
+    </div>
+    <script src="js/app.js"></script>
+  </body>
+
+</html>

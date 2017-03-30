@@ -1,41 +1,28 @@
-var temps = 10;
-var compte = temps;
-var pointCounter = 0;
-let timer;
-let taupe;
+var time = 60;
+var compte = time;
+var pointCounter;
+var timer;
+var taupe;
 
 // Only select DOM elements.
-var $contener = document.querySelector('.contener');
-var $bestscore = document.querySelector('#bestscore');
-var $compt = document.querySelector('#compt');
-var $score = document.querySelector('#score');
-var $button = document.querySelector('.resetBouton');
+var $contener = document.querySelector('.cases');
+var $bestScore = document.querySelector('.bestScore');
+var $compt = document.querySelector('.remainingTime');
+var $score = document.querySelector('.currentScore');
+var $resetButton = document.querySelector('.resetButton');
 var $game = document.querySelector('.game');
 
-function noSelection() {
-  return false;
-}
 
-function selectionOn() {
-  return true;
-}
-
-document.onselectstart = new Function('return false');
-
-if (window.sidebar) {
-  document.onmousedown = noSelection;
-  document.onclick = selectionOn;
-}
 
 for (var i = 0; i <= 8; i++) {
-  $contener.innerHTML += "<div class='case case" + i + "'></div>";
+  $contener.innerHTML += '<div class="xs-4"><div class="case"></div></div>';
 }
 
 if (localStorage.getItem('score')) {
-  $bestscore.textContent = 'Score : ' + localStorage.getItem('score');
+  $bestScore.textContent = localStorage.getItem('score');
 } else {
   localStorage.setItem('score', 0);
-  $bestscore.textContent = 'Score : 0';
+  $bestScore.textContent = '0';
 }
 
 function decompte() {
@@ -48,29 +35,28 @@ function decompte() {
 
   if (compte <= 0) {
     reset();
+    reset.innerHTML = 'Rejouer';
+    $compt.innerHTML = 'Terminé';
 
     if (pointCounter > localStorage.getItem('score')) {
+      console.log('test')
       localStorage.setItem('score', pointCounter);
-      $bestscore.textContent = 'Score : ' + pointCounter;
+      $bestScore.textContent = pointCounter;
     }
   }
   // Decrease 1 point.
   compte--;
 }
 
-$button.addEventListener('click', resetGame);
+$resetButton.addEventListener('click', resetGame);
 
 // Update cursor.
 $game.addEventListener('mouseup', function() {
-  document.querySelector(
-    '.contener'
-  ).style.cursor = "url('./images/Marteau_TFH.png'), pointer";
+  $game.style.cursor = "url('./images/hammer.png') 43 43, pointer";
 });
 
 $game.addEventListener('mousedown',function () {
-  document.querySelector(
-    '.contener'
-  ).style.cursor = "url('./images/Marteau.Click.png'), pointer";
+  $game.style.cursor = "url('./images/hammerClick.png') 43 43, pointer";
 });
 
 // Handle the random position of the taupes.
@@ -90,17 +76,17 @@ function randomPosition() {
   var nbrRandom = min + Math.floor(Math.random() * max);
 
   if (nbrRandom === 2) {
-    $cases[x].innerHTML = '<div id="darktaupe"><img src="images/darkTaupiqueur.png" alt="darktopiqueur"/></div>';
+    $cases[x].innerHTML = '<img class="mole" src="images/moleThug.png" alt="Taupe thug" / >';
     $cases[x].addEventListener('click', losePoints);
   } else if (nbrRandom === 6) {
     $cases[
       x
-    ].innerHTML = '<div id="darktaupe"><img src="images/Marteau_TFH.png" alt="marteau"/></div>';
+    ].innerHTML = '<img class="mole" src="images/bomb.png" alt="Bombe" / >';
     $cases[x].addEventListener('click', gameOver);
   } else {
     $cases[
       x
-    ].innerHTML = '<div id="taupe"><img src="images/Taupiqueur.png" alt="t opiqueur"/></div>';
+    ].innerHTML = '<img class="mole" src="images/mole.png" alt="Taupe" / >';
     $cases[x].addEventListener('click', earnPoints);
   }
 }
@@ -120,7 +106,8 @@ function losePoints(event) {
 
 // Handle the points when the user wins.
 function earnPoints(event) {
-  // JouerSon();
+  let moleSound = document.querySelector('.moleSound');
+  moleSound.play();
   pointCounter++;
   $score.textContent = pointCounter;
   event.currentTarget.removeEventListener('click', earnPoints);
@@ -128,10 +115,11 @@ function earnPoints(event) {
 
 // Handle the points when the user loses the game.
 function gameOver(event) {
+  let bombSound = document.querySelector('.bombSound');
+  bombSound.play();
   event.currentTarget.removeEventListener('click', gameOver);
   reset();
-
-  alert('GAME OVER');
+  $compt.innerHTML = 'Game over';
 }
 
 /*function JouerSon() {
@@ -144,18 +132,39 @@ function reset() {
   clearInterval(timer);
   clearInterval(taupe);
 
-  $button.classList.remove('reset');
-  $button.addEventListener('click', resetGame);
+  $resetButton.classList.remove('reset');
+  $resetButton.addEventListener('click', resetGame);
 }
 
 // Run another game.
 function resetGame() {
-  $button.textContent = 'Rejouer';
+  $resetButton.textContent = 'Rejouer';
   pointCounter = 0;
-  compte = temps;
+  compte = time;
   $score.textContent = pointCounter;
   timer = setInterval(decompte, 1000);
-  taupe = setInterval(randomPosition, 1000);
-  $button.removeEventListener('click', resetGame);
-  $button.classList.add('reset');
+  taupe = setInterval(randomPosition, 700);
+  $resetButton.removeEventListener('click', resetGame);
+  $resetButton.classList.add('reset');
 }
+
+// Function mute
+
+var audio = document.querySelectorAll('audio');
+var buttonMute = document.querySelector('.mute');
+
+buttonMute.addEventListener(
+  'click',
+  function(){
+    for(let i = 0; i < audio.length; i++){
+      if(audio[i].muted){
+        audio[i].muted = false;
+        buttonMute.innerHTML = '<img src="images/speaker.png" alt="Haut parleur" />';
+      } else{
+        audio[i].muted = true;
+        buttonMute.innerHTML = '<img src="images/speakerMute.png" alt="Haut parleur muet" />';
+      }
+    }
+  },
+  false
+);

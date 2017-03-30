@@ -1,0 +1,54 @@
+/***************
+
+     HEADER
+
+***************/
+
+header{
+  position: absolute;
+  z-index: 2;
+
+  display: flex;
+
+  width: 100%;
+  height: 30vh;
+
+  transition: 0.5s;
+
+  background: url(../images/header.png);
+  background-position: center;
+  background-size: auto 100%;
+
+  align-items: center;
+  justify-content: space-between;
+  .logo{
+    margin: 0 auto;
+    img{
+      width: 270px;
+    }
+    img.anim{
+      animation: logo 1.5s;
+    }
+  }
+}
+
+.social{
+  position: absolute;
+  z-index: 2;
+  right: 10px;
+  a{
+    display: block;
+  }
+  img{
+    display: block;
+
+    width: 35px;
+    padding: 5px 0;
+    @media screen and (min-width: $l){
+      width: auto;
+    }
+  }
+  .mute{
+    cursor: pointer;
+  }
+}

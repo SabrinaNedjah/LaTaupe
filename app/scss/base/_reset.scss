@@ -1,0 +1,30 @@
+*{
+  box-sizing: border-box;
+}
+
+html, body, ul, ol, h1, h2, h3, h4, h5, h6, button{
+  margin: 0;
+  padding: 0;
+}
+
+body{
+  -webkit-overflow-scrolling: touch;
+}
+
+li{
+  display: inline-block;
+}
+
+a{
+  text-decoration: none;
+
+  color: $white;
+}
+
+input, button{
+  border: none;
+  background: none;
+  &:focus{
+    outline: 0;
+  }
+}

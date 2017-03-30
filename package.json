@@ -1,0 +1,22 @@
+{
+  "name": "base_workflow",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "gulp": "latest",
+    "gulp-autoprefixer": "latest",
+    "gulp-clean-css": "^3.0.4",
+    "gulp-csscomb": "latest",
+    "gulp-imagemin": "^3.2.0",
+    "gulp-load-plugins": "latest",
+    "gulp-rename": "latest",
+    "gulp-sass": "latest",
+    "gulp-watch": "latest"
+  }
+}
