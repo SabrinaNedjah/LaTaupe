@@ -90,9 +90,7 @@ function randomPosition() {
   var nbrRandom = min + Math.floor(Math.random() * max);
 
   if (nbrRandom === 2) {
-    $cases[
-      x
-    ].innerHTML = '<div id="darktaupe"><img src="images/darkTaupiqueur.png" alt="darktopiqueur"/></div>';
+    $cases[x].innerHTML = '<div id="darktaupe"><img src="images/darkTaupiqueur.png" alt="darktopiqueur"/></div>';
     $cases[x].addEventListener('click', losePoints);
   } else if (nbrRandom === 6) {
     $cases[
