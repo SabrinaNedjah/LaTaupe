@@ -61,17 +61,17 @@ function decompte() {
 $button.addEventListener('click', resetGame);
 
 // Update cursor.
-$game.onmouseup = function() {
+$game.addEventListener('mouseup', function() {
   document.querySelector(
     '.contener'
   ).style.cursor = "url('./images/Marteau_TFH.png'), pointer";
-};
+});
 
-$game.onmousedown = function() {
+$game.addEventListener('mousedown',function () {
   document.querySelector(
     '.contener'
   ).style.cursor = "url('./images/Marteau.Click.png'), pointer";
-};
+});
 
 // Handle the random position of the taupes.
 function randomPosition() {
