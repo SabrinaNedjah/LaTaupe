@@ -93,7 +93,6 @@ function randomPosition() {
 
 // Handle the points when the user loses by clicking the wrong taupe.
 function losePoints(event) {
-  // JouerSon();
   pointCounter -= 10;
 
   if (pointCounter < 0) {
@@ -122,10 +121,6 @@ function gameOver(event) {
   $compt.innerHTML = 'Game over';
 }
 
-/*function JouerSon() {
-	var sound = document.getElementById("beep");
-	sound.play();
-} */
 
 // Reset the game.
 function reset() {
